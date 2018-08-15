@@ -7,6 +7,14 @@ defmodule Chapter02Test do
   end
   test "uri encode" do
     input = "\"><script>alert(\"foo\")</script>"
-    assert  input == Chapter02.sanitize(input |> URI.encode)
+    assert "\"><script>alert(\"foo\")</script>" == Chapter02.sanitize(input |> URI.encode)
+  end
+  test "input that baypasses security check" do
+    input = "%22%3E%3Cscript%3Ealert(%22foo%22)%3C/script%3E"
+    assert input ==  ("\"><script>alert(\"foo\")</script>" |> URI.encode)
+  end
+  test "question string length" do
+    input = "\"><script>alert(\"foo\")</script>"
+    assert (input |> String.length) == 31
   end
 end

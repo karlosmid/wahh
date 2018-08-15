@@ -10,10 +10,9 @@ defmodule Chapter02 do
     |> String.replace("<script>","")
     |> String.slice(0..49)
     |> String.replace("\"","")
-    |> URI.decode
     endd = result
     |> String.length
-    _sanitize(result, start == endd)
+    _sanitize(result |> URI.decode, start == endd)
   end
   defp _sanitize(input, done) when done == true do
     input
